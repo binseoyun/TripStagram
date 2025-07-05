@@ -1,6 +1,7 @@
 package com.example.newapplication.ui.notifications
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,14 +34,17 @@ class NotificationsFragment : Fragment() {
         val storageRef = FirebaseStorage.getInstance().reference
         val imageRef = storageRef.child("images/canada1.png")
 
+
         imageRef.downloadUrl
             .addOnSuccessListener { uri ->
+                Log.d("Firebase", "Image download URL: $uri")
                 Glide.with(this)
                     .load(uri)
                     .into(binding.imageView2)
             }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "이미지 불러오기 실패", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Failed to get image URL", e)
+                Toast.makeText(requireContext(), "이미지 로드 실패: ${e.message}", Toast.LENGTH_SHORT).show()
             }
 
         return root
