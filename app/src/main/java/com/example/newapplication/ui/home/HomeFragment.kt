@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.ListViewAdapter
 import com.example.myapplication.ListViewModel
+import com.example.newapplication.DetailActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentHomeBinding
+import android.content.Intent
 
 //홈 탭에 ListView를 띄우기 위한 프래그먼트
 class HomeFragment : Fragment() {
@@ -60,6 +62,12 @@ class HomeFragment : Fragment() {
 
         val adapter = ListViewAdapter(items)
         listView.adapter = adapter
+        listView.setOnItemClickListener{_,_,position,_ ->
+            val clickedItem = items[position]
+            val intent = Intent(requireContext(),DetailActivity::class.java)
+            intent.putExtra("itemText",clickedItem.text)
+            startActivity(intent)
+        }
 
         return root
     }
