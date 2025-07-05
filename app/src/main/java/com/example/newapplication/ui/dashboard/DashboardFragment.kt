@@ -1,14 +1,18 @@
 package com.example.newapplication.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newapplication.DetailActivity
+import com.example.newapplication.DetailPhotoActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentDashboardBinding
 
@@ -47,7 +51,12 @@ class DashboardFragment : Fragment() {
             R.drawable.taiwanpng, R.drawable.england, R.drawable.japan
         ) //랜덤 이미지 생성
 
-        adapter=GalleryAdapter(images)
+        adapter=GalleryAdapter(images,{pos->
+            Toast.makeText(requireContext(),pos.toString(),Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(),DetailPhotoActivity::class.java)
+            intent.putExtra("itemText",pos.toString())
+            startActivity(intent)
+        })
         //그레이드 레이아웃으로 한 줄3분할
         recyclerView.layoutManager=GridLayoutManager(requireContext(),3)
         recyclerView.adapter=adapter

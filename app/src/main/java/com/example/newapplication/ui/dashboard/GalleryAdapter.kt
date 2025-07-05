@@ -5,11 +5,20 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newapplication.R
 
-class GalleryAdapter(private val imageList: List<Int>) :
+class GalleryAdapter(private val imageList: List<Int>,
+    private val onItemCLick:(Int)->Unit) :
     RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.imageView)
+        init{
+            image.setOnClickListener{
+                val position = adapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    onItemCLick(position)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
