@@ -15,7 +15,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
 import com.example.newapplication.databinding.FragmentNotificationsBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
@@ -101,35 +105,47 @@ class NotificationsFragment : Fragment() {
     //이미지 업로드
     private fun uploadImageToCloudinary(imageUri: Uri) {
         val filePath = getRealPathFromURI(imageUri) ?: return
-        val file = File(filePath)
+        MediaManager.get().upload(filePath)
+            .unsigned("basic_preset")
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String?) {
+                    Log.d("Cloudinary", "업로드 시작")
+                }
 
-//Cloudinary는 file과 upload_preset가 필요
+                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {}
 
-        val requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("file", file.name, file.asRequestBody("image/*".toMediaTypeOrNull()))
-            .addFormDataPart("upload_preset", "ml_default") // 사전 설정한 preset
-            .build()
+                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                    val url = resultData?.get("secure_url").toString()
+                    Log.d("Cloudinary", "업로드 성공: $url")
+                    Toast.makeText(requireContext(), "URL: $url", Toast.LENGTH_SHORT).show()
+                }
 
-        val request = Request.Builder()
-            .url("https://api.cloudinary.com/ml_default/CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@daw58uvei/image/upload")
-            .post(requestBody)
-            .build()
+                override fun onError(requestId: String?, error: ErrorInfo?) {
+                    Log.e("Cloudinary", "업로드 실패: ${error?.description}")
+                }
 
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.e("Upload", "Failed")
+                override fun onReschedule(requestId: String?, error: ErrorInfo?) {}
+            })
+            .dispatch()
+        val db = FirebaseFirestore.getInstance()
+
+        // 추가할 데이터 정의
+        val imageData = hashMapOf(
+            "country" to "JAPAN",
+            "url" to "https://res.cloudinary.com/your_cloud_name/image/upload/your_image.jpg",
+            "user" to "root"
+        )
+
+        // 컬렉션 이름은 "images", 문서는 자동 ID로 추가
+        db.collection("images")
+            .add(imageData)
+            .addOnSuccessListener { documentReference ->
+                println("문서 추가 성공: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                println("문서 추가 실패: $e")
             }
 
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                val responseData = response.body?.string()
-                Log.d("Upload", "Response: $responseData")
-                /*activity?.runOnUiThread {
-                    imageUrlTextView.text = "업로드 성공!\n$responseData"
-                }*/
-            }
-        })
     }
 
     private fun getRealPathFromURI(contentUri: Uri): String? {
