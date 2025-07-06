@@ -3,4 +3,23 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string-array name="country_list">
+
+        <item>대한민국</item>
+        <item>일본</item>
+        <item>영국</item>
+        <item>프랑스</item>
+        <item>중국</item>
+        <item>싱가포르</item>
+        <item>대만</item>
+        <item>필리핀</item>
+        <item>미국</item>
+        <item>베트남</item>
+        <item>호주</item>
+        <item>캐나다</item>
+        <item>브라질</item>
+        <item>몽골</item>
+        <item>독일</item>
+
+    </string-array>
 </resources>

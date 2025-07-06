@@ -10,6 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.RatingBar
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -42,6 +45,17 @@ class NotificationsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+//드롭바
+    private lateinit var countrySpinner : Spinner
+    //여행지 정보 입력
+    private lateinit var locationInfo: EditText
+
+    //Rating Bar
+    private lateinit var ratingBar: RatingBar
+
+
+
+
 //notification에서 버튼 클릭 =>
 // openGallery() 를 통해 갤러리에서 이미지 선택 =>
 // onActicityResult() => uploadImageToCloudinary() => Cloudinary의 응답 => 성공
@@ -64,10 +78,21 @@ class NotificationsFragment : Fragment() {
 
 */
 
+
+
         _binding = FragmentNotificationsBinding.inflate(inflater,container,false)
         val root: View = binding.root
 
+        //spinner
+        countrySpinner = binding.spinner
+        //이미지 업로드 버튼
         uploadButton = binding.button
+        //여행지 정보 입력
+        locationInfo=binding.editTextCountryInfo
+        //별점
+        ratingBar=binding.ratingBar
+
+
 
 
         uploadButton.setOnClickListener {
@@ -75,15 +100,14 @@ class NotificationsFragment : Fragment() {
 
         }
 
-
         return root
     }
     private fun openGallery() {
         //갤러리에서 이미지를 고르게 시스템 갤러리 앱을 띄움, 선택 후
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
-        //onActivityResult로 넘어가게 변경
-    // onActivityResult(intent,)
+
+
 
     }
 
@@ -118,6 +142,36 @@ class NotificationsFragment : Fragment() {
                     val url = resultData?.get("secure_url").toString()
                     Log.d("Cloudinary", "업로드 성공: $url")
                     Toast.makeText(requireContext(), "URL: $url", Toast.LENGTH_SHORT).show()
+                    val db = FirebaseFirestore.getInstance()
+
+                    // 추가할 데이터 정의
+                    //받아온 값으로 저장하게 지정
+                    val selectedCountry=countrySpinner.selectedItem.toString()
+
+                    //EditText에서 텍스트 가져오기
+                   val locationInfo = binding.editTextCountryInfo.text.toString()
+
+                    //별점 기능
+                    val starBar=binding.ratingBar.rating.toInt().toString()
+
+                    val imageData= hashMapOf(
+                        "country" to selectedCountry,
+                        "url" to url,
+                        "locationInfo" to locationInfo,
+                        "starbar" to starBar,
+                        "user" to "root"
+                    )
+
+
+                    // 컬렉션 이름은 "images", 문서는 자동 ID로 추가
+                    db.collection("images")
+                        .add(imageData)
+                        .addOnSuccessListener { documentReference ->
+                            println("문서 추가 성공: ${documentReference.id}")
+                        }
+                        .addOnFailureListener { e ->
+                            println("문서 추가 실패: $e")
+                        }
                 }
 
                 override fun onError(requestId: String?, error: ErrorInfo?) {
@@ -127,24 +181,9 @@ class NotificationsFragment : Fragment() {
                 override fun onReschedule(requestId: String?, error: ErrorInfo?) {}
             })
             .dispatch()
-        val db = FirebaseFirestore.getInstance()
 
-        // 추가할 데이터 정의
-        val imageData = hashMapOf(
-            "country" to "JAPAN",
-            "url" to "https://res.cloudinary.com/your_cloud_name/image/upload/your_image.jpg",
-            "user" to "root"
-        )
 
-        // 컬렉션 이름은 "images", 문서는 자동 ID로 추가
-        db.collection("images")
-            .add(imageData)
-            .addOnSuccessListener { documentReference ->
-                println("문서 추가 성공: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                println("문서 추가 실패: $e")
-            }
+
 
     }
 
