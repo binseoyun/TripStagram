@@ -141,11 +141,11 @@ class NotificationsFragment : Fragment() {
             imagePreview.setImageURI(imageUri)
 
             // 버튼 배경색을 파란색으로 변경
-            /*val buttonSelectImages = view?.findViewById<Button>(R.id.button)
+            val buttonSelectImages = view?.findViewById<Button>(R.id.button)
             buttonSelectImages?.setBackgroundTintList(
                 ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
             )
-*/
+
 
 
         }
@@ -212,6 +212,7 @@ class NotificationsFragment : Fragment() {
 
 
 
+        //업로드 성공하면 성공이라고 알림창
 
     }
 
