@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.TextView
@@ -53,6 +54,13 @@ class NotificationsFragment : Fragment() {
     //Rating Bar
     private lateinit var ratingBar: RatingBar
 
+    private lateinit var imagePreview: ImageView
+
+    //전체 등록버튼
+    private lateinit var submitButton: Button
+
+
+
 
 
 
@@ -91,13 +99,21 @@ class NotificationsFragment : Fragment() {
         locationInfo=binding.editTextCountryInfo
         //별점
         ratingBar=binding.ratingBar
+        //이미지 미리보기 버튼
+        imagePreview=binding.imageView2
+        //등록 버튼
+        submitButton=binding.button3
 
 
 
-
+        //이미지 선택 버튼
         uploadButton.setOnClickListener {
             openGallery()
 
+        }
+
+        submitButton.setOnClickListener{
+            uploadImageToCloudinary(imageUri!!)
         }
 
         return root
@@ -112,6 +128,7 @@ class NotificationsFragment : Fragment() {
     }
 
     //이미지 선택 결과 처리
+    //여기서 imagePreview가 호출되게 코드를 바꾸고, uploadImageToCloudinary함수 호출을 등록 버튼으로 변경함
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -119,12 +136,13 @@ class NotificationsFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             //사용자가 이미지를 고르면 URL을 imageUri에 저장
             imageUri = data.data
-            //imageUri?.let {
+            imagePreview.setImageURI(imageUri)
 
-            uploadImageToCloudinary(imageUri!!)
-            //}
         }
     }
+
+
+
 
     //이미지 업로드
     private fun uploadImageToCloudinary(imageUri: Uri) {
@@ -141,7 +159,7 @@ class NotificationsFragment : Fragment() {
                 override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
                     val url = resultData?.get("secure_url").toString()
                     Log.d("Cloudinary", "업로드 성공: $url")
-                    Toast.makeText(requireContext(), "URL: $url", Toast.LENGTH_SHORT).show()
+
                     val db = FirebaseFirestore.getInstance()
 
                     // 추가할 데이터 정의

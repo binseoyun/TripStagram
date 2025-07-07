@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.newapplication.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="여행지 정보 입력"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

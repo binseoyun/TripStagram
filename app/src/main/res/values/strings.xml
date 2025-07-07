@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TripStagram</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">국가별 보기</string>
+    <string name="title_dashboard">한번에 보기</string>
+    <string name="title_notifications">사진 업로드</string>
     <string-array name="country_list">
 
         <item>대한민국</item>
