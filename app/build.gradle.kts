@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.androidx.navigation.safeargs)
     id("com.google.gms.google-services")
     id("kotlin-kapt")
+
 }
 
 android {
