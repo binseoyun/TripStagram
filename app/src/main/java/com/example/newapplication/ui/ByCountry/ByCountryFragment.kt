@@ -13,6 +13,8 @@ import com.example.newapplication.DetailActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentBycountryBinding
 import android.content.Intent
+import androidx.navigation.fragment.findNavController
+import com.example.newapplication.ui.ByCountry.ByCountryFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //홈 탭에 ListView를 띄우기 위한 프래그먼트
@@ -73,9 +75,11 @@ class ByCountryFragment : Fragment() {
         listView.adapter = adapter
         listView.setOnItemClickListener{_,_,position,_ ->
             val clickedItem = items[position]
-            val intent = Intent(requireContext(),DetailActivity::class.java)
-            intent.putExtra("itemText",clickedItem.text)
-            startActivity(intent)
+            //val intent = Intent(requireContext(),DetailActivity::class.java)
+            //intent.putExtra("itemText",clickedItem.text)
+            //startActivity(intent)
+            val action = ByCountryFragmentDirections.actionBycountryToAllBycountryFragment(items[position].text)
+            findNavController().navigate(action)
 
         }
 

@@ -1,4 +1,4 @@
-package com.example.newapplication.ui.detail
+package com.example.newapplication.ui.ByCountry
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newapplication.R
-import org.w3c.dom.Text
 
-class DetailFragment : Fragment() {
+class AllbyCountryFragment : Fragment() {
 
     // SafeArgs로 전달받은 값 받기
-    private val args: DetailFragmentArgs by navArgs()
+    private val args: AllbyCountryFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,15 +24,11 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // fragment_detail.xml inflate
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
+        val view = inflater.inflate(R.layout.fragment_all_bycountry, container, false)
         setHasOptionsMenu(true)
         // TextView에 값 설정
-        val textView: TextView = view.findViewById(R.id.textLocationName)
-        textView.text = args.locationName
-        view.findViewById<TextView>(R.id.textCountry).text=args.countryName
-        Glide.with(requireContext())
-            .load(args.url)
-            .into(view.findViewById<ImageView>(R.id.imageLocation))
+        args.countryName //이게 나라이름!!!!
+
         return view
 
     }

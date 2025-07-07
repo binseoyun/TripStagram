@@ -10,7 +10,11 @@
         android:name="com.example.newapplication.ui.ByCountry.ByCountryFragment"
         android:label="By Country"
 
-        tools:layout="@layout/fragment_bycountry" />
+        tools:layout="@layout/fragment_bycountry">
+        <action
+            android:id="@+id/action_bycountry_to_all_bycountry_Fragment"
+            app:destination="@id/all_bycountry_Fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -41,6 +45,16 @@
             app:argType="string" />
         <argument
             android:name="url"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/all_bycountry_Fragment"
+        android:name="com.example.newapplication.ui.ByCountry.AllbyCountryFragment"
+        android:label="all_bycountry"
+        tools:layout="@layout/fragment_all_bycountry">
+
+        <argument
+            android:name="countryName"
             app:argType="string" />
     </fragment>
 </navigation>
