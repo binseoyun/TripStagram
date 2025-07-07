@@ -4,13 +4,16 @@ import android.os.Build
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cloudinary.android.MediaManager
 import com.example.newapplication.databinding.ActivityMainBinding
+import com.google.firebase.database.collection.LLRBNode.Color
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         config["cloud_name"] = "djsbyqbek"
         MediaManager.init(this,config)
 
+        //toolbar2 아이디의 Toolbar를 앱의 label의 ActionBar 제목으로 자동 설정
+        val toolbar = findViewById<Toolbar>(R.id.toolbar2)
+        setSupportActionBar(toolbar)
+        //색상 변경
+        //toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white))
 
     }
 

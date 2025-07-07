@@ -3,6 +3,7 @@ package com.example.newapplication.ui.notifications
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -158,7 +159,9 @@ class NotificationsFragment : Fragment() {
             // 버튼 배경색을 파란색으로 변경
             val buttonSelectImages = view?.findViewById<Button>(R.id.button)
             buttonSelectImages?.setBackgroundTintList(
-                ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blackblue))
+
+                //ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
             )
             binding.scrollView.fullScroll(View.FOCUS_DOWN)
 

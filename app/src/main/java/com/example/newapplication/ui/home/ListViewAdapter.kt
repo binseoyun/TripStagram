@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
 import com.example.newapplication.R
 
 class ListViewAdapter(private val items: List<ListViewModel>) : BaseAdapter() {
@@ -25,7 +26,6 @@ class ListViewAdapter(private val items: List<ListViewModel>) : BaseAdapter() {
         //이미지 부분 추가
         val image = view.findViewById<ImageView>(R.id.galleryItem)
        image.setImageResource(items[position].img)
-
 
 
         return view

@@ -155,7 +155,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Upload"
-            android:backgroundTint="@android:color/holo_blue_light"
+            android:backgroundTint="@color/blackblue"
             android:textColor="@android:color/white"
             app:layout_constraintTop_toBottomOf="@id/ratingBar"
             app:layout_constraintStart_toStartOf="parent"

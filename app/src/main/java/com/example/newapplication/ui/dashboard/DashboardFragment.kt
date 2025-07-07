@@ -78,14 +78,6 @@ class DashboardFragment : Fragment() {
             }.addOnFailureListener{
                 e->Log.e("Firestore","데이터 가져오기 실패",e)
             }
-
-
-
-
-        //추가한 부분
-
-        //
-
         return root
     }
 
