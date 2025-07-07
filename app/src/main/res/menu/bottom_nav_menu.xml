@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/tap1"
-        android:title="@string/title_home" />
+        android:title="By country" />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/tap2"
-        android:title="@string/title_dashboard" />
+        android:title="All" />
 
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/tap3"
-        android:title="@string/title_notifications" />
+        android:title="Upload" />
 
 </menu>
