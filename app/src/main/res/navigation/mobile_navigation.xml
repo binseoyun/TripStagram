@@ -36,5 +36,11 @@
         <argument
             android:name="locationName"
             app:argType="string" />
+        <argument
+            android:name="countryName"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 </navigation>
