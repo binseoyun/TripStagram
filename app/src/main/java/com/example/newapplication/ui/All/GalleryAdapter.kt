@@ -1,16 +1,10 @@
-package com.example.newapplication.ui.dashboard
+package com.example.newapplication.ui.All
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.example.newapplication.R
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.load.DataSource
 
 
 class GalleryAdapter(private val imageList: List<ImagesInfo>,

@@ -1,31 +1,27 @@
-package com.example.newapplication.ui.home
+package com.example.newapplication.ui.ByCountry
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.ListViewAdapter
 import com.example.myapplication.ListViewModel
 import com.example.newapplication.DetailActivity
 import com.example.newapplication.R
-import com.example.newapplication.databinding.FragmentHomeBinding
+import com.example.newapplication.databinding.FragmentBycountryBinding
 import android.content.Intent
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //홈 탭에 ListView를 띄우기 위한 프래그먼트
-class HomeFragment : Fragment() {
+class ByCountryFragment : Fragment() {
 
     //추가한 부분
     private lateinit var listView: ListView
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentBycountryBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -38,10 +34,10 @@ class HomeFragment : Fragment() {
 
     ): View {
         val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(ByCountryViewModel::class.java)
 
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentBycountryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         //val toolbar=root.findViewById<android.widget.Toolbar>(R.id.toolbar2)

@@ -1,4 +1,4 @@
-package com.example.newapplication.ui.notifications
+package com.example.newapplication.ui.Upload
 
 import android.app.Activity
 import android.content.Intent
@@ -16,38 +16,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RatingBar
-import android.widget.ScrollView
 import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.newapplication.R
-import com.example.newapplication.databinding.FragmentNotificationsBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.newapplication.databinding.FragmentUploadBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
-import com.google.firebase.storage.FirebaseStorage
-import java.io.File
-import java.io.IOException
+class UploadFragment : Fragment() {
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-
-class NotificationsFragment : Fragment() {
-
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentUploadBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -95,7 +76,7 @@ class NotificationsFragment : Fragment() {
 
 
 
-        _binding = FragmentNotificationsBinding.inflate(inflater,container,false)
+        _binding = FragmentUploadBinding.inflate(inflater,container,false)
         val root: View = binding.root
 
         //spinner

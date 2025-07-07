@@ -1,29 +1,23 @@
-package com.example.newapplication.ui.dashboard
+package com.example.newapplication.ui.All
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newapplication.DetailActivity
-import com.example.newapplication.DetailPhotoActivity
 import com.example.newapplication.R
-import com.example.newapplication.databinding.FragmentDashboardBinding
+import com.example.newapplication.databinding.FragmentAllBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.newapplication.ui.dashboard.DashboardFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class DashboardFragment : Fragment() {
+class AllFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentAllBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,9 +33,9 @@ class DashboardFragment : Fragment() {
     ): View {
 
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this).get(AllViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentAllBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         //추가한 부분
@@ -69,7 +63,7 @@ class DashboardFragment : Fragment() {
                 recyclerView.clipToPadding = false
 
                 adapter=GalleryAdapter(imageList,{pos->
-                    val action = DashboardFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country,url=imageList[pos].url)
+                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country,url=imageList[pos].url)
                     findNavController().navigate(action)
                 })
                 //그레이드 레이아웃으로 한 줄3분할

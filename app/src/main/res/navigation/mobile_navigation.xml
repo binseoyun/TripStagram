@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.newapplication.ui.home.HomeFragment"
+        android:name="com.example.newapplication.ui.ByCountry.ByCountryFragment"
         android:label="By Country"
 
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_bycountry" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.newapplication.ui.dashboard.DashboardFragment"
+        android:name="com.example.newapplication.ui.All.AllFragment"
         android:label="All"
-        tools:layout="@layout/fragment_dashboard">
+        tools:layout="@layout/fragment_all">
         <action
             android:id="@+id/action_navigation_dashboard_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -24,9 +24,9 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.newapplication.ui.notifications.NotificationsFragment"
+        android:name="com.example.newapplication.ui.Upload.UploadFragment"
         android:label="Upload"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_upload" />
 
     <fragment
         android:id="@+id/detailFragment"
