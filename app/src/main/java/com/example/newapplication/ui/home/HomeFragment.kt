@@ -23,7 +23,6 @@ class HomeFragment : Fragment() {
     //추가한 부분
     private lateinit var listView: ListView
 
-
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
@@ -71,6 +70,10 @@ class HomeFragment : Fragment() {
             val intent = Intent(requireContext(),DetailActivity::class.java)
             intent.putExtra("itemText",clickedItem.text)
             startActivity(intent)
+
+            //각 리스트를 클릭했을 때 해당 나라의 사진들이 뜰 수 있게 설정
+
+
         }
 
         return root
