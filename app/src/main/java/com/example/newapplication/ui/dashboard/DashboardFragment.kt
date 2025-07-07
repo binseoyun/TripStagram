@@ -19,6 +19,7 @@ import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentDashboardBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.newapplication.ui.dashboard.DashboardFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashboardFragment : Fragment() {
 
@@ -63,6 +64,9 @@ class DashboardFragment : Fragment() {
                 }
                 recyclerView=binding.galleryView
                 //랜덤 이미지 리스트
+                val bottomNavHeight = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).height
+                recyclerView.setPadding(0, 0, 0, bottomNavHeight)
+                recyclerView.clipToPadding = false
 
                 adapter=GalleryAdapter(imageList,{pos->
                     val action = DashboardFragmentDirections.actionNavigationDashboardToDetailFragment(imageList[pos].locationinfo)

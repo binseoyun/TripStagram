@@ -15,6 +15,7 @@ import com.example.newapplication.DetailActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentHomeBinding
 import android.content.Intent
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //홈 탭에 ListView를 띄우기 위한 프래그먼트
 class HomeFragment : Fragment() {
@@ -41,7 +42,10 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val listView = binding.listVIew
-
+        listView.viewTreeObserver.addOnGlobalLayoutListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+            listView.setPadding(0, 0, 0, bottomNav.height)
+        }
         val items = listOf(
             ListViewModel("대한민국",R.drawable.korea),
             ListViewModel("일본",R.drawable.japan),
