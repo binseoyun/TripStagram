@@ -69,7 +69,7 @@ class DashboardFragment : Fragment() {
                 recyclerView.clipToPadding = false
 
                 adapter=GalleryAdapter(imageList,{pos->
-                    val action = DashboardFragmentDirections.actionNavigationDashboardToDetailFragment(imageList[pos].locationinfo)
+                    val action = DashboardFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country,url=imageList[pos].url)
                     findNavController().navigate(action)
                 })
                 //그레이드 레이아웃으로 한 줄3분할

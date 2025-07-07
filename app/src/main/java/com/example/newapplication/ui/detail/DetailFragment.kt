@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.newapplication.R
+import org.w3c.dom.Text
 
 class DetailFragment : Fragment() {
 
@@ -25,9 +28,12 @@ class DetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         setHasOptionsMenu(true)
         // TextView에 값 설정
-        val textView: TextView = view.findViewById(R.id.text_location_name)
+        val textView: TextView = view.findViewById(R.id.textLocationName)
         textView.text = args.locationName
-
+        view.findViewById<TextView>(R.id.textCountry).text=args.countryName
+        Glide.with(requireContext())
+            .load(args.url)
+            .into(view.findViewById<ImageView>(R.id.imageLocation))
         return view
     }
 
