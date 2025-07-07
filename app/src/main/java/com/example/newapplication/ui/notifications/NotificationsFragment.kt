@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RatingBar
+import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +26,7 @@ import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentNotificationsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
 import com.google.firebase.storage.FirebaseStorage
@@ -116,6 +118,17 @@ class NotificationsFragment : Fragment() {
 
         submitButton.setOnClickListener{
             uploadImageToCloudinary(imageUri!!)
+        }
+        val navView = requireActivity().findViewById<View>(R.id.nav_view)
+        val scrollView = binding.scrollView// ScrollView에 id 부여 필요
+        navView.post {
+            scrollView.setPadding(
+                scrollView.paddingLeft,
+                scrollView.paddingTop,
+                scrollView.paddingRight,
+                navView.height
+            )
+            scrollView.clipToPadding = false
         }
 
         return root
