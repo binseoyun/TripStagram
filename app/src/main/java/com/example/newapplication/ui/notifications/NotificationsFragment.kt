@@ -2,7 +2,9 @@ package com.example.newapplication.ui.notifications
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -112,7 +114,7 @@ class NotificationsFragment : Fragment() {
 
         //이미지 선택 버튼
         uploadButton.setOnClickListener {
-            openGallery()
+            checkAndRequestStoragePermission()
 
         }
 
@@ -158,13 +160,26 @@ class NotificationsFragment : Fragment() {
             buttonSelectImages?.setBackgroundTintList(
                 ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
             )
+            binding.scrollView.fullScroll(View.FOCUS_DOWN)
 
 
 
         }
     }
 
+    private fun checkAndRequestStoragePermission() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        }
 
+        if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(permission), 1001)
+        } else {
+            openGallery()
+        }
+    }
 
 
     //이미지 업로드
