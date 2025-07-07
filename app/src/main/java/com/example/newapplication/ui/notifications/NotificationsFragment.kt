@@ -16,12 +16,14 @@ import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentNotificationsBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -137,6 +139,14 @@ class NotificationsFragment : Fragment() {
             //사용자가 이미지를 고르면 URL을 imageUri에 저장
             imageUri = data.data
             imagePreview.setImageURI(imageUri)
+
+            // 버튼 배경색을 파란색으로 변경
+            /*val buttonSelectImages = view?.findViewById<Button>(R.id.button)
+            buttonSelectImages?.setBackgroundTintList(
+                ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
+            )
+*/
+
 
         }
     }
