@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         //toolbar2 아이디의 Toolbar를 앱의 label의 ActionBar 제목으로 자동 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar2)
         setSupportActionBar(toolbar)
+
         //색상 변경
         //toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white))
 
