@@ -55,8 +55,9 @@ class AllbyCountryFragment : Fragment() {
                     val locationInfoDetail=document.getString("locationInfoDetail")?:""
                     val url = document.getString("url") ?: ""
                     val starbar= document.getString("starbar")?.toInt() ?: 0
+                    val userId=document.getString("userId")?:""
 
-                    imageList.add(ImagesInfo(country, "root", url,starbar,location,locationInfoDetail))
+                    imageList.add(ImagesInfo(country, userId, url,starbar,location,locationInfoDetail))
                 }
 
                 Log.d("Firestore", "${selectedCountry} 이미지 ${imageList.size}개 불러옴")

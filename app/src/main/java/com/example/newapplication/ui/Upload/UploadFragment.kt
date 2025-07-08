@@ -55,7 +55,12 @@ class UploadFragment : Fragment() {
     //전체 등록버튼
     private lateinit var submitButton: Button
 
-
+    fun disableButton(button: Button){
+        button.isEnabled=false
+    }
+    fun enableButton(button: Button){
+        button.isEnabled=true
+    }
 
 
 
@@ -110,8 +115,13 @@ class UploadFragment : Fragment() {
 
         }
 
+
+
         submitButton.setOnClickListener{
+            //업로드 버튼이 한번 클릭되면 버튼 비활성화
+            disableButton(submitButton)
             uploadImageToCloudinary(imageUri!!)
+            //업로드가 다 되면 버튼 활성화
         }
         val navView = requireActivity().findViewById<View>(R.id.nav_view)
         val scrollView = binding.scrollView// ScrollView에 id 부여 필요
@@ -212,6 +222,7 @@ class UploadFragment : Fragment() {
                         Context.MODE_PRIVATE)
                     val userId=sharedPreferences.getString("userId",null)
 
+                    println(userId)
 
 
                     val imageData= hashMapOf(
@@ -220,7 +231,6 @@ class UploadFragment : Fragment() {
                         "locationInfo" to locationInfo,
                         "locationInfoDetail" to locationInfoDetail,
                         "starbar" to starBar,
-                        "user" to "root",
                         "userId" to userId
                     )
 
@@ -230,16 +240,23 @@ class UploadFragment : Fragment() {
                         .add(imageData)
                         .addOnSuccessListener { documentReference ->
                             println("문서 추가 성공: ${documentReference.id}")
-                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,locationInfoDetail,url, "root",starBar)
+                            //////////////버튼 재활성화
+                            enableButton(submitButton)
+                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,locationInfoDetail,url, userId.toString(),starBar)
                             findNavController().navigate(action)
                         }
                         .addOnFailureListener { e ->
                             println("문서 추가 실패: $e")
+                            //////////버튼 재활성화
+                            enableButton(submitButton)
                             Toast.makeText(requireContext(),"Upload Failed",Toast.LENGTH_SHORT)
                         }
                 }
 
                 override fun onError(requestId: String?, error: ErrorInfo?) {
+                    ////////버튼 재활성화
+                    enableButton(submitButton)
+
                     Log.e("Cloudinary", "업로드 실패: ${error?.description}")
                 }
 
