@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:fillViewport="true"
     android:clipToPadding="false"
-    android:id="@+id/scrollView"
+    android:id="@+id/scrollUploadView"
     android:background="@android:color/white"
     tools:context=".ui.Upload.UploadFragment">
 

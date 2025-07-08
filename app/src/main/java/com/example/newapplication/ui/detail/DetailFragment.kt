@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
+import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newapplication.R
-import org.w3c.dom.Text
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailFragment : Fragment() {
 
@@ -38,8 +40,23 @@ class DetailFragment : Fragment() {
         Glide.with(requireContext())
             .load(args.url)
             .into(view.findViewById<ImageView>(R.id.imageLocation))
+        val bottomNavHeight = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).height
+        view.findViewById<ScrollView>(R.id.scrollDetailView).setPadding(0, 0, 0, bottomNavHeight)
+        view.findViewById<ScrollView>(R.id.scrollDetailView).clipToPadding=true
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = "Information"
+        }
         return view
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            title = "TripStagram"
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

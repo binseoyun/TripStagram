@@ -124,7 +124,7 @@ class UploadFragment : Fragment() {
             //업로드가 다 되면 버튼 활성화
         }
         val navView = requireActivity().findViewById<View>(R.id.nav_view)
-        val scrollView = binding.scrollView// ScrollView에 id 부여 필요
+        val scrollView = binding.scrollUploadView// ScrollView에 id 부여 필요
         navView.post {
             scrollView.setPadding(
                 scrollView.paddingLeft,
@@ -162,7 +162,7 @@ class UploadFragment : Fragment() {
 
                 //ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
             )
-            binding.scrollView.fullScroll(View.FOCUS_DOWN)
+            binding.scrollUploadView.fullScroll(View.FOCUS_DOWN)
 
 
 
