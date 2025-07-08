@@ -2,11 +2,16 @@ package com.example.newapplication
 
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.withStyledAttributes
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -25,6 +30,16 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val prefs=getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val userId=prefs.getString("userId",null)
+
+        if(userId==null){
+            showUserIdInputDialog()
+        } else{
+            //이미 등록된 사용자
+            startAppNormally(userId)
+        }
 
         val navView: BottomNavigationView = binding.navView
 
@@ -51,5 +66,36 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun showUserIdInputDialog(){
+        val builder=AlertDialog.Builder(this)
+        builder.setTitle("사용자 등록")
+
+        val input=EditText(this)
+        input.hint="아이디를 입력하세요"
+        input.inputType=InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+        builder.setPositiveButton("등록"){ dialog, _->
+            val userId=input.text.toString().trim()
+            if(userId.isNotEmpty()){
+                //userID가 이미 존재gksekaus prefs에서 아이디를 가져와서 userid로
+                val prefs=getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                prefs.edit().putString("userId",userId).apply()
+                startAppNormally(userId)
+
+            }else{
+                Toast.makeText(this,"아이디를 입력해주세요",Toast.LENGTH_SHORT)
+                showUserIdInputDialog() //아이디 입력 받게
+            }
+        }
+        builder.setCancelable(false)
+        builder.show()
+    }
+
+    //아이디 저장되어 있을 때
+    private fun startAppNormally(userId:String){
+        Toast.makeText(this,"환영합니다,$userId 닙!",Toast.LENGTH_SHORT).show()
+
+    }
 
 }
