@@ -48,8 +48,10 @@ class AllFragment : Fragment() {
                     val user = document.getString("user")?:""
                     val url = document.getString("url")?:""
                     val locationInfo = document.getString("locationInfo")?:""
+                    val locationInfoDetail=document.getString("locationInfoDetail")
                     val starbar = document.getString("starbar")?.toIntOrNull()?:0
-                    imageList.add(ImagesInfo(country, user, url,starbar,locationInfo))
+                    imageList.add(ImagesInfo(country, user, url,starbar,locationInfo,locationInfoDetail.toString())
+                    )
                 }
 
                 Log.d("Firestore", "총 ${imageList.size}개의 이미지 로드됨")
@@ -63,7 +65,7 @@ class AllFragment : Fragment() {
                 recyclerView.clipToPadding = false
 
                 adapter=GalleryAdapter(imageList,{pos->
-                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country,url=imageList[pos].url)
+                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country, locationInfoDetail = imageList[pos].locationinfo,url=imageList[pos].url, user = imageList[pos].user,starbar=imageList[pos].starbar.toString())
                     findNavController().navigate(action)
                 })
                 //그레이드 레이아웃으로 한 줄3분할

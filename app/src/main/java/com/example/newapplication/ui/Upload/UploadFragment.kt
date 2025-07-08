@@ -41,6 +41,9 @@ class UploadFragment : Fragment() {
     //여행지 정보 입력
     private lateinit var locationInfo: EditText
 
+    //여행지 상세 정보
+    private lateinit var locationInfoDetail :EditText
+
     //Rating Bar
     private lateinit var ratingBar: RatingBar
 
@@ -87,13 +90,15 @@ class UploadFragment : Fragment() {
         uploadButton = binding.button
         //여행지 정보 입력
         locationInfo=binding.editTextCountryInfo
+        //여행지 상제 정보
+
+        locationInfoDetail=binding.editTextCountryInfoDetail
         //별점
         ratingBar=binding.ratingBar
         //이미지 미리보기 버튼
         imagePreview=binding.imageView2
         //등록 버튼
         submitButton=binding.button3
-
 
 
         //이미지 선택 버튼
@@ -123,8 +128,6 @@ class UploadFragment : Fragment() {
         //갤러리에서 이미지를 고르게 시스템 갤러리 앱을 띄움, 선택 후
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
-
-
 
     }
 
@@ -193,6 +196,9 @@ class UploadFragment : Fragment() {
                     //EditText에서 텍스트 가져오기
                    val locationInfo = binding.editTextCountryInfo.text.toString()
 
+                    //상세 정보 가져오기
+                    val locationInfoDetail=binding.editTextCountryInfoDetail.text.toString()
+
                     //별점 기능
                     val starBar=binding.ratingBar.rating.toInt().toString()
 
@@ -200,8 +206,11 @@ class UploadFragment : Fragment() {
                         "country" to selectedCountry,
                         "url" to url,
                         "locationInfo" to locationInfo,
+                        "locationInfoDetail" to locationInfoDetail,
                         "starbar" to starBar,
-                        "user" to "root"
+                        "user" to "root",
+
+
                     )
 
 
@@ -210,7 +219,7 @@ class UploadFragment : Fragment() {
                         .add(imageData)
                         .addOnSuccessListener { documentReference ->
                             println("문서 추가 성공: ${documentReference.id}")
-                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,url)
+                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,locationInfoDetail,url, "root",starBar)
                             findNavController().navigate(action)
                         }
                         .addOnFailureListener { e ->

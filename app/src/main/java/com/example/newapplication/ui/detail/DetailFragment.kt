@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,9 @@ class DetailFragment : Fragment() {
         val textView: TextView = view.findViewById(R.id.textLocationName)
         textView.text = args.locationName
         view.findViewById<TextView>(R.id.textCountry).text=args.countryName
+        view.findViewById<TextView>(R.id.textDescription).text=args.locationInfoDetail
+        view.findViewById<TextView>(R.id.textAuthor).text=args.user
+        view.findViewById<RatingBar>(R.id.ratingBar).rating=args.starbar.toInt().toFloat()
         Glide.with(requireContext())
             .load(args.url)
             .into(view.findViewById<ImageView>(R.id.imageLocation))

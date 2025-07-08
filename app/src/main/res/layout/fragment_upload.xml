@@ -82,6 +82,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"/>
 
+        <!-- Destination information -->
+        <TextView
+            android:id="@+id/textDestinationInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Destination Information"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/editTextCountryInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"/>
+
+        <EditText
+            android:id="@+id/editTextCountryInfoDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Enter destination name"
+            android:inputType="text"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textDestinationInformation" />
+
+
+
         <!-- Select Images -->
         <TextView
             android:id="@+id/textSelectImages"
@@ -90,7 +117,7 @@
             android:text="Select Images"
             android:textStyle="bold"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/editTextCountryInfo"
+            app:layout_constraintTop_toBottomOf="@id/editTextCountryInfoDetail"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="24dp"/>
 
