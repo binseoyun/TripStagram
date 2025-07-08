@@ -51,11 +51,11 @@ class AllbyCountryFragment : Fragment() {
 
                 for (document in result) {
                     val country = document.getString("country") ?: ""
-                    val location = document.getString("locationinfo") ?: ""
+                    val location = document.getString("locationInfo") ?: ""
                     val locationInfoDetail=document.getString("locationInfoDetail")?:""
                     val url = document.getString("url") ?: ""
                     val starbar= document.getString("starbar")?.toInt() ?: 0
-                    val userId=document.getString("userId")?:""
+                    val userId=document.getString("user")?:""
 
 
                     imageList.add(ImagesInfo(country, userId, url,starbar,location,locationInfoDetail))

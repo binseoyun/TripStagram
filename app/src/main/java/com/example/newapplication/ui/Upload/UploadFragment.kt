@@ -231,7 +231,7 @@ class UploadFragment : Fragment() {
                         "locationInfo" to locationInfo,
                         "locationInfoDetail" to locationInfoDetail,
                         "starbar" to starBar,
-                        "userId" to userId
+                        "user" to userId
                     )
 
 
