@@ -1,6 +1,7 @@
 package com.example.newapplication.ui.ByCountry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,8 +11,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newapplication.R
+import com.example.newapplication.ui.All.AllFragmentDirections
+import com.example.newapplication.ui.All.GalleryAdapter
+import com.example.newapplication.ui.All.ImagesInfo
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AllbyCountryFragment : Fragment() {
 
@@ -27,7 +35,51 @@ class AllbyCountryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_all_bycountry, container, false)
         setHasOptionsMenu(true)
         // TextView에 값 설정
-        args.countryName //이게 나라이름!!!!
+        //println(args.countryName) //이게 나라이름!!!!
+
+        val db = FirebaseFirestore.getInstance()
+
+        //해당 리스트에서 선택받도록 아이디 연결
+        val selectedCountry = args.countryName
+
+
+        db.collection("images")
+            .whereEqualTo("country", selectedCountry) // 선택한 국가만 조회
+            .get()
+            .addOnSuccessListener { result ->
+                val imageList = mutableListOf<ImagesInfo>()
+
+                for (document in result) {
+                    val country = document.getString("country") ?: ""
+                    val location = document.getString("locationinfo") ?: ""
+                    val url = document.getString("url") ?: ""
+                    val starbar= document.getString("starbar")?.toInt() ?: 0
+
+                    imageList.add(ImagesInfo(country, "root", url,starbar,location))
+                }
+
+                Log.d("Firestore", "${selectedCountry} 이미지 ${imageList.size}개 불러옴")
+
+                val recyclerView = view.findViewById<RecyclerView>(R.id.galleryView)
+                recyclerView.setPadding(0, 0, 0, requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).height)
+                recyclerView.clipToPadding = false
+                recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+
+                val adapter = GalleryAdapter(imageList) { pos ->
+                   val action = AllbyCountryFragmentDirections.actionAllbycountryToDetailFragment(
+                        locationName = imageList[pos].locationinfo,
+                        countryName = imageList[pos].country,
+                        url = imageList[pos].url
+                    )
+                    findNavController().navigate(action)
+                }
+
+                recyclerView.adapter = adapter
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "데이터 불러오기 실패", e)
+            }
+
 
         return view
 

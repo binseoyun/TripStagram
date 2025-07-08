@@ -17,8 +17,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
@@ -208,9 +210,12 @@ class UploadFragment : Fragment() {
                         .add(imageData)
                         .addOnSuccessListener { documentReference ->
                             println("문서 추가 성공: ${documentReference.id}")
+                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,url)
+                            findNavController().navigate(action)
                         }
                         .addOnFailureListener { e ->
                             println("문서 추가 실패: $e")
+                            Toast.makeText(requireContext(),"Upload Failed",Toast.LENGTH_SHORT)
                         }
                 }
 

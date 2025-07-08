@@ -30,7 +30,12 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.newapplication.ui.Upload.UploadFragment"
         android:label="Upload"
-        tools:layout="@layout/fragment_upload" />
+        tools:layout="@layout/fragment_upload">
+
+        <action
+            android:id="@+id/action_upload_to_detailFragment"
+            app:destination="@id/detailFragment" />
+</fragment>
 
     <fragment
         android:id="@+id/detailFragment"
@@ -46,6 +51,8 @@
         <argument
             android:name="url"
             app:argType="string" />
+
+
     </fragment>
     <fragment
         android:id="@+id/all_bycountry_Fragment"
@@ -56,5 +63,9 @@
         <argument
             android:name="countryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_allbycountry_to_detailFragment"
+            app:destination="@id/detailFragment" />
+
     </fragment>
 </navigation>
