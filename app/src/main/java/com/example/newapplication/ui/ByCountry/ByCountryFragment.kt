@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.ListViewAdapter
 import com.example.myapplication.ListViewModel
-import com.example.newapplication.DetailActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentBycountryBinding
 import android.content.Intent

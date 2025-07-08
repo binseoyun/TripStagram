@@ -50,6 +50,7 @@ class AllFragment : Fragment() {
                     val locationInfo = document.getString("locationInfo")?:""
                     val locationInfoDetail=document.getString("locationInfoDetail")
                     val starbar = document.getString("starbar")?.toIntOrNull()?:0
+
                     imageList.add(ImagesInfo(country, user, url,starbar,locationInfo,locationInfoDetail.toString())
                     )
                 }
