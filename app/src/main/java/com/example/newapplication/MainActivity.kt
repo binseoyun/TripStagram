@@ -1,5 +1,7 @@
 package com.example.newapplication
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -31,12 +33,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val prefs=getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        val userId=prefs.getString("userId",null)
+        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val userId = prefs.getString("userId", null)
 
-        if(userId==null){
+        if (userId == null) {
             showUserIdInputDialog()
-        } else{
+        } else {
             //이미 등록된 사용자
             startAppNormally(userId)
         }
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         val config: HashMap<String, String> = HashMap()
         config["cloud_name"] = "djsbyqbek"
-        MediaManager.init(this,config)
+        MediaManager.init(this, config)
 
         //toolbar2 아이디의 Toolbar를 앱의 label의 ActionBar 제목으로 자동 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar2)
@@ -66,25 +68,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showUserIdInputDialog(){
-        val builder=AlertDialog.Builder(this)
+    private fun showUserIdInputDialog() {
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("사용자 등록")
 
-        val input=EditText(this)
-        input.hint="아이디를 입력하세요"
-        input.inputType=InputType.TYPE_CLASS_TEXT
+        val input = EditText(this)
+        input.hint = "아이디를 입력하세요"
+        input.inputType = InputType.TYPE_CLASS_TEXT
         builder.setView(input)
 
-        builder.setPositiveButton("등록"){ dialog, _->
-            val userId=input.text.toString().trim()
-            if(userId.isNotEmpty()){
+        builder.setPositiveButton("등록") { dialog, _ ->
+            val userId = input.text.toString().trim()
+            if (userId.isNotEmpty()) {
                 //userID가 이미 존재gksekaus prefs에서 아이디를 가져와서 userid로
-                val prefs=getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                prefs.edit().putString("userId",userId).apply()
+                val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                prefs.edit().putString("userId", userId).apply()
                 startAppNormally(userId)
 
-            }else{
-                Toast.makeText(this,"아이디를 입력해주세요",Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(this, "아이디를 입력해주세요", Toast.LENGTH_SHORT)
                 showUserIdInputDialog() //아이디 입력 받게
             }
         }
@@ -93,9 +95,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     //아이디 저장되어 있을 때
-    private fun startAppNormally(userId:String){
-        Toast.makeText(this,"환영합니다,$userId 닙!",Toast.LENGTH_SHORT).show()
+    private fun startAppNormally(userId: String) {
+        Toast.makeText(this, "환영합니다,$userId 닙!", Toast.LENGTH_SHORT).show()
 
     }
+    //아이디 반환
+     fun getUserId(context: Context):String?{
+        val sharedPreferences:SharedPreferences=context.getSharedPreferences("prefs",Context.MODE_PRIVATE)
+        return sharedPreferences.getString("userId",null)
+    }
+
 
 }

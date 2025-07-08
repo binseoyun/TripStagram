@@ -1,7 +1,9 @@
 package com.example.newapplication.ui.Upload
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.net.Uri
@@ -24,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.example.newapplication.MainActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentUploadBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -202,6 +205,15 @@ class UploadFragment : Fragment() {
                     //별점 기능
                     val starBar=binding.ratingBar.rating.toInt().toString()
 
+                  // val userId=(activity as? MainActivity)?.getUserId(requireContext())
+
+                    //아이디를 받아옴
+                    val sharedPreferences:SharedPreferences=requireContext().getSharedPreferences("UserPrefs",
+                        Context.MODE_PRIVATE)
+                    val userId=sharedPreferences.getString("userId",null)
+
+
+
                     val imageData= hashMapOf(
                         "country" to selectedCountry,
                         "url" to url,
@@ -209,8 +221,7 @@ class UploadFragment : Fragment() {
                         "locationInfoDetail" to locationInfoDetail,
                         "starbar" to starBar,
                         "user" to "root",
-
-
+                        "userId" to userId
                     )
 
 
