@@ -57,7 +57,6 @@ class AllbyCountryFragment : Fragment() {
                     val starbar= document.getString("starbar")?.toInt() ?: 0
                     val userId=document.getString("user")?:""
 
-
                     imageList.add(ImagesInfo(country, userId, url,starbar,location,locationInfoDetail))
                 }
 

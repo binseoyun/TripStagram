@@ -5,6 +5,10 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -64,9 +68,31 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar2)
         setSupportActionBar(toolbar)
 
+
+
         //색상 변경
         //toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white))
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(
+            R.menu.template_toolbar_menu,
+            menu
+        )
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_button -> {
+                val view=findViewById<View>(R.id.toolbar_button)
+                //Toast.makeText(this,"클릭",Toast.LENGTH_SHORT).show()
+                showUserIdInputDialog()
+                true
+            }
+        }
+        return true
     }
 
     private fun showUserIdInputDialog() {
