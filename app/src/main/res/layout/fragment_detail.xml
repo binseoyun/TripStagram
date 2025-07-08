@@ -28,8 +28,8 @@
         <!-- 장소 이름 -->
         <TextView
             android:id="@+id/textLocationName"
-            android:layout_width="45dp"
-            android:layout_height="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="광화문"
@@ -117,24 +117,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textCommentsTitle">
-
-            <!-- 예시 댓글 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="백재호: 여긴와야 한다." />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="빈서윤: 좋아요~" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Liam Bennett: 역시 문화재의 아름다움이 이때만큼.. 역사기 서려 있는곳" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/textCommentsTitle"/>
 
         <!-- 댓글 입력창 -->
         <EditText
