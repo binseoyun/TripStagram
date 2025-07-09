@@ -34,13 +34,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 class UploadFragment : Fragment() {
 
     private var _binding: FragmentUploadBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
-//드롭바
+    //UI 요소 선언
+
+    //국가 선택
     private lateinit var countrySpinner : Spinner
+
     //여행지 정보 입력
     private lateinit var locationInfo: EditText
 
@@ -50,19 +50,20 @@ class UploadFragment : Fragment() {
     //Rating Bar
     private lateinit var ratingBar: RatingBar
 
+    //선택한 이미지 미리 보기
     private lateinit var imagePreview: ImageView
 
-    //전체 등록버튼
+    //등록 버튼
     private lateinit var submitButton: Button
 
+    //버튼 비활성
     fun disableButton(button: Button){
         button.isEnabled=false
     }
+    //버튼 활성
     fun enableButton(button: Button){
         button.isEnabled=true
     }
-
-
 
 
 //notification에서 버튼 클릭 =>
@@ -70,36 +71,29 @@ class UploadFragment : Fragment() {
 // onActicityResult() => uploadImageToCloudinary() => Cloudinary의 응답 => 성공
 
     private val PICK_IMAGE_REQUEST = 1
-   // private lateinit var imageUrlTextView: TextView
-    private lateinit var uploadButton: Button
     private var imageUri: Uri? = null
+
+    private lateinit var uploadButton: Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-       /* val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-*/
-
-
 
         _binding = FragmentUploadBinding.inflate(inflater,container,false)
         val root: View = binding.root
 
-        //spinner
+        //바인딩 된 UI 컴포넌트와 연결
+
+        //국가 선택
         countrySpinner = binding.spinner
-        //이미지 업로드 버튼
+        //이미지 선택 버튼
         uploadButton = binding.button
-        //여행지 정보 입력
+        //여행지 이름 입력
         locationInfo=binding.editTextCountryInfo
         //여행지 상제 정보
-
         locationInfoDetail=binding.editTextCountryInfoDetail
         //별점
         ratingBar=binding.ratingBar
@@ -109,22 +103,21 @@ class UploadFragment : Fragment() {
         submitButton=binding.button3
 
 
-        //이미지 선택 버튼
+        //이미지 선택 버튼 => 갤러리 열기 => 권한 요청
         uploadButton.setOnClickListener {
             checkAndRequestStoragePermission()
 
         }
-
-
-
+        //등록 버튼 클릭 => 이미지 Cloudinary 업로드 => Firestore 저장
         submitButton.setOnClickListener{
-            //업로드 버튼이 한번 클릭되면 버튼 비활성화
-            disableButton(submitButton)
+            disableButton(submitButton) //중복 클릭 방지
             uploadImageToCloudinary(imageUri!!)
             //업로드가 다 되면 버튼 활성화
         }
+
+        //하단 탭에 가려지지 않게 스크롤뷰 패딩 조절
         val navView = requireActivity().findViewById<View>(R.id.nav_view)
-        val scrollView = binding.scrollUploadView// ScrollView에 id 부여 필요
+        val scrollView = binding.scrollUploadView
         navView.post {
             scrollView.setPadding(
                 scrollView.paddingLeft,
@@ -137,6 +130,8 @@ class UploadFragment : Fragment() {
 
         return root
     }
+
+
     private fun openGallery() {
         //갤러리에서 이미지를 고르게 시스템 갤러리 앱을 띄움, 선택 후
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -153,22 +148,19 @@ class UploadFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             //사용자가 이미지를 고르면 URL을 imageUri에 저장
             imageUri = data.data
-            imagePreview.setImageURI(imageUri)
+            imagePreview.setImageURI(imageUri) //이미지 미리보기
 
-            // 버튼 배경색을 파란색으로 변경
+            // 버튼 색상 변경
             val buttonSelectImages = view?.findViewById<Button>(R.id.button)
             buttonSelectImages?.setBackgroundTintList(
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.blackblue))
-
-                //ContextCompat.getColorStateList(requireContext(), android.R.color.holo_blue_light)
             )
+            //자동으로 스크롤 맨 아래로 이동
             binding.scrollUploadView.fullScroll(View.FOCUS_DOWN)
-
-
 
         }
     }
-
+//Android 13 이상/미만 권한 처리 분기
     private fun checkAndRequestStoragePermission() {
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             android.Manifest.permission.READ_MEDIA_IMAGES
@@ -184,7 +176,7 @@ class UploadFragment : Fragment() {
     }
 
 
-    //이미지 업로드
+    //이미지 업로드 => 성공 시 Firestore에 데이터 저장
     private fun uploadImageToCloudinary(imageUri: Uri) {
         val filePath = getRealPathFromURI(imageUri) ?: return
         MediaManager.get().upload(filePath)
@@ -215,16 +207,14 @@ class UploadFragment : Fragment() {
                     //별점 기능
                     val starBar=binding.ratingBar.rating.toInt().toString()
 
-                  // val userId=(activity as? MainActivity)?.getUserId(requireContext())
-
-                    //아이디를 받아옴
+                    //저장된 사용자 ID 불러오기
                     val sharedPreferences:SharedPreferences=requireContext().getSharedPreferences("UserPrefs",
                         Context.MODE_PRIVATE)
                     val userId=sharedPreferences.getString("userId",null)
 
                     println(userId)
 
-
+                 //Firestore에 저장할 데이터
                     val imageData= hashMapOf(
                         "country" to selectedCountry,
                         "url" to url,
@@ -266,10 +256,8 @@ class UploadFragment : Fragment() {
 
 
 
-        //업로드 성공하면 성공이라고 알림창
-
     }
-
+//uri => 파일 경로 변환
     private fun getRealPathFromURI(contentUri: Uri): String? {
         val cursor = activity?.contentResolver?.query(contentUri, null, null, null, null)
         return if (cursor != null) {

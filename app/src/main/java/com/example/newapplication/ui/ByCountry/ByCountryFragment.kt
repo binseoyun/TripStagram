@@ -16,16 +16,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.newapplication.ui.ByCountry.ByCountryFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-//홈 탭에 ListView를 띄우기 위한 프래그먼트
+//"국가별 보기"탭을 구성하는 Fragment
 class ByCountryFragment : Fragment() {
-
-    //추가한 부분
+    //ListView 변수
     private lateinit var listView: ListView
 
+    //ViewBinding용 변수
     private var _binding: FragmentBycountryBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -34,24 +31,21 @@ class ByCountryFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(ByCountryViewModel::class.java)
 
-
+     //ViewBinding 설정
         _binding = FragmentBycountryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //val toolbar=root.findViewById<android.widget.Toolbar>(R.id.toolbar2)
-        //(activity as AppCompatActivity).setSupportActionBar(toolbar)
-       // (activity as AppCompatActivity).supportActionBar?.title="By Country"
-
-
-
+        //ListView 가져오기
         val listView = binding.listVIew
+
+        //하단 탭바(nav_view)의 높이만큼 패딩 추가해서 콘텐츠 가림 방지
         listView.viewTreeObserver.addOnGlobalLayoutListener {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
             listView.setPadding(0, 0, 0, bottomNav.height)
         }
+
+        //보여줄 나라 목록 데이터 생성
         val items = listOf(
             ListViewModel("대한민국",R.drawable.korea),
             ListViewModel("일본",R.drawable.japan),
@@ -69,25 +63,19 @@ class ByCountryFragment : Fragment() {
             ListViewModel("몽골",R.drawable.mongolia),
             ListViewModel("독일",R.drawable.germany)
             )
-
+       //커스텀 어댑터를 생성해서 ListView에 연결
         val adapter = ListViewAdapter(items)
         listView.adapter = adapter
         listView.setOnItemClickListener{_,_,position,_ ->
-            val clickedItem = items[position]
-            //val intent = Intent(requireContext(),DetailActivity::class.java)
-            //intent.putExtra("itemText",clickedItem.text)
-            //startActivity(intent)
-            val action = ByCountryFragmentDirections.actionBycountryToAllBycountryFragment(items[position].text)
+            //val clickedItem = items[position]
+
+            //국가명을 가지고 이동
+            val action = ByCountryFragmentDirections.
+                   actionBycountryToAllBycountryFragment(items[position].text)
             findNavController().navigate(action)
-
         }
-
-
-
         return root
     }
-
-
 
 
     override fun onDestroyView() {
