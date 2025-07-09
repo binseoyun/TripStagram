@@ -1,3 +1,4 @@
+![새 프로젝트](https://github.com/user-attachments/assets/fd778583-93a0-422e-8d4f-d3ca24d182ab)
 # 여행지 선택은: TripStagram~
 
 ✅이번 여름 여행의 목적지를 못정한 사람
@@ -6,9 +7,12 @@
 
 여행사진을 위한 전문 SNS.!
 
+
+
 “**TripStagram**”!!!!!!
 
-![Screenshot_20250709-172146_TripStagram 2](https://github.com/user-attachments/assets/82ae7e40-6029-4dca-a6b7-00ea7038e9bf)
+![daepyo](https://github.com/user-attachments/assets/73cf1582-5f01-44df-a126-7a95cc354c61)
+
 
 
 
