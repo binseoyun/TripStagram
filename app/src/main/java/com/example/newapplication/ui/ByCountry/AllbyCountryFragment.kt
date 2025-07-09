@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -86,10 +87,15 @@ class AllbyCountryFragment : Fragment() {
                 Log.e("Firestore", "데이터 불러오기 실패", e)
             }
 
-
         return view
-
     }
 
+    //탭에 국가별 이름 설정
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.title = args.countryName
+    }
 
 }

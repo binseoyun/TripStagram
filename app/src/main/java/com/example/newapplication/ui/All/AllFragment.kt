@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -36,9 +37,6 @@ class AllFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        //사용 X
-
 
         //ViewBinding 연결
         _binding = FragmentAllBinding.inflate(inflater, container, false)
@@ -99,5 +97,16 @@ class AllFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = requireActivity() as AppCompatActivity
+        val actionBar=activity.supportActionBar
+
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setLogo(R.drawable.applog)
+        actionBar?.setDisplayUseLogoEnabled(true)
     }
 }
