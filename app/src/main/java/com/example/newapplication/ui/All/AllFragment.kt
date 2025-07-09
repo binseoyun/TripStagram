@@ -100,14 +100,5 @@ class AllFragment : Fragment() {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        val activity = requireActivity() as AppCompatActivity
-        val actionBar=activity.supportActionBar
-
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.setLogo(R.drawable.applog)
-        actionBar?.setDisplayUseLogoEnabled(true)
-    }
 }
