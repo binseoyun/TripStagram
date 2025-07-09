@@ -19,11 +19,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cloudinary.android.MediaManager
 import com.example.newapplication.databinding.ActivityMainBinding
+import com.example.newapplication.ui.detail.DetailFragment
 import com.google.firebase.database.collection.LLRBNode.Color
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -101,6 +103,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     //Toolbar 메뉴를 생성
@@ -129,13 +132,22 @@ class MainActivity : AppCompatActivity() {
             //toolbar_button 클릭시 사용자 ID 입력 다이얼로그 호출
             R.id.toolbar_button -> {
                 val view=findViewById<View>(R.id.toolbar_button)
-                Toast.makeText(this,"클릭",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"클릭",Toast.LENGTH_SHORT).show()
                 showUserIdInputDialog()
             }
 
              android.R.id.home -> {
                  findNavController(R.id.nav_host_fragment_activity_main).navigateUp()
 
+             }
+             R.id.menu_delete->{
+                 val navHostFragment =
+                     supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+                 val currentFragment = navHostFragment.childFragmentManager.fragments[0]
+
+                 if (currentFragment is DetailFragment) {
+                     currentFragment.delete()
+                 }
              }
              //뒤로가기 처리
 

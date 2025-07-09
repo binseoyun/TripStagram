@@ -59,10 +59,11 @@ class AllFragment : Fragment() {
                     val locationInfo = document.getString("locationInfo")?:""
                     val locationInfoDetail=document.getString("locationInfoDetail")
                     val starbar = document.getString("starbar")?.toIntOrNull()?:0
+                    val androidId = document.getString("androidId")?:""
 
                     //데이터를 리스트에 추가
                     imageList.add(ImagesInfo(
-                            country, user, url,starbar,locationInfo,locationInfoDetail.toString())
+                            country, user, url,starbar,locationInfo,locationInfoDetail.toString(),androidId)
                     )
                 }
 
@@ -81,7 +82,7 @@ class AllFragment : Fragment() {
 
                 //Adapter 설정(클릭 시 DetailFragment로 이동)
                 adapter=GalleryAdapter(imageList,{pos->
-                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country, locationInfoDetail = imageList[pos].locationinfo,url=imageList[pos].url, user = imageList[pos].user,starbar=imageList[pos].starbar.toString())
+                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country, locationInfoDetail = imageList[pos].locationinfo,url=imageList[pos].url, user = imageList[pos].user,starbar=imageList[pos].starbar.toString(), androidId = imageList[pos].androidId)
                     findNavController().navigate(action)
                 })
 

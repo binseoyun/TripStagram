@@ -56,8 +56,9 @@ class AllbyCountryFragment : Fragment() {
                     val url = document.getString("url") ?: ""
                     val starbar= document.getString("starbar")?.toInt() ?: 0
                     val userId=document.getString("user")?:""
+                    val androidId = document.getString("androidId")?:""
 
-                    imageList.add(ImagesInfo(country, userId, url,starbar,location,locationInfoDetail))
+                    imageList.add(ImagesInfo(country, userId, url,starbar,location,locationInfoDetail,androidId))
                 }
 
                 Log.d("Firestore", "${selectedCountry} 이미지 ${imageList.size}개 불러옴")
@@ -74,7 +75,8 @@ class AllbyCountryFragment : Fragment() {
                         locationInfoDetail = imageList[pos].locationInfoDetail,
                         url = imageList[pos].url,
                        user=imageList[pos].user,
-                       starbar=imageList[pos].starbar.toString()
+                       starbar=imageList[pos].starbar.toString(),
+                       androidId = imageList[pos].androidId
 
                     )
                     findNavController().navigate(action)
