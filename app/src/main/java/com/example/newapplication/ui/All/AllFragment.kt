@@ -38,8 +38,7 @@ class AllFragment : Fragment() {
     ): View {
 
         //사용 X
-        val dashboardViewModel =
-            ViewModelProvider(this).get(AllViewModel::class.java)
+
 
         //ViewBinding 연결
         _binding = FragmentAllBinding.inflate(inflater, container, false)

@@ -91,13 +91,5 @@ class AllbyCountryFragment : Fragment() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigateUp()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
 }

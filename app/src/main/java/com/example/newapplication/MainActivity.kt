@@ -56,21 +56,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-/*
-        //최상단 Fragment 지정(뒤로 가기 버튼이 필요 없는 최상위 화면)
-        val appBarConfiguration = AppBarConfiguration( //탭 이동시 자동으로 뒤로가기 버튼이 안보이게 처리
-            setOf(
-                R.id.navigation_home, //By Country
-                R.id.navigation_dashboard, //All
-                R.id.navigation_notifications //Upload
-            )
-        )
 
-        //아래 주석처리된 함수는 자동으로 각 탭의 title,memu,button에 맞게 toolbar를 커스텀마이즈
-        //setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //onSupportNavigateUp()를 통해 최상단 Fragment제외 자동 뒤로가기 <- 생성
-*/
 
         //하단 탭 바와 navController 연결
         navView.setupWithNavController(navController)
@@ -86,7 +73,20 @@ class MainActivity : AppCompatActivity() {
         //커스텀 Toolbar 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar2)
         setSupportActionBar(toolbar) //액션바처럼 작동하게 설정
+        //최상단 Fragment 지정(뒤로 가기 버튼이 필요 없는 최상위 화면)
+        val appBarConfiguration = AppBarConfiguration( //탭 이동시 자동으로 뒤로가기 버튼이 안보이게 처리
+            setOf(
+                R.id.navigation_home, //By Country
+                R.id.navigation_dashboard, //All
+                R.id.navigation_notifications //Upload
+            )
+        )
 
+        //아래 주석처리된 함수는 자동으로 각 탭의 title,memu,button에 맞게 toolbar를 커스텀마이즈
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //onSupportNavigateUp()를 통해 최상단 Fragment제외 자동 뒤로가기 <- 생성
+        onSupportNavigateUp()
     }
 
     //Toolbar 메뉴를 생성

@@ -130,21 +130,7 @@ class DetailFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (activity as? AppCompatActivity)?.supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(false)
-            title = "TripStagram"
-        }
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigateUp()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
+
 }
