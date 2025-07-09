@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Media
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.Menu
@@ -67,10 +68,7 @@ class MainActivity : AppCompatActivity() {
         //기본 뒤로 가기 버튼 활성화
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //Cloudinary 초기화
-        val config: HashMap<String, String> = HashMap()
-        config["cloud_name"] = "djsbyqbek"
-        MediaManager.init(this, config)
+
 
         //커스텀 Toolbar 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar2)

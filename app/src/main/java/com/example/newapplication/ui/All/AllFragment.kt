@@ -49,6 +49,7 @@ class AllFragment : Fragment() {
         //"images" 컬렉션에서 모든 문서 조회
         db.collection("images").get()
             .addOnSuccessListener{ result ->
+                if (_binding == null) return@addOnSuccessListener
                 for(document in result){
                     //각 필드의 값 추출
                     val country = document.getString("country")?:""
