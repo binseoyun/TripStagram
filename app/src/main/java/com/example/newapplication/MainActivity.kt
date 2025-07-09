@@ -1,12 +1,10 @@
 package com.example.newapplication
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.os.Build
+
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Media
+
 import android.text.InputType
-import android.view.LayoutInflater
+
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,19 +14,16 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.withStyledAttributes
+
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.cloudinary.android.MediaManager
+
 import com.example.newapplication.databinding.ActivityMainBinding
 import com.example.newapplication.ui.detail.DetailFragment
-import com.google.firebase.database.collection.LLRBNode.Color
-import com.google.firebase.firestore.FirebaseFirestore
+
 
 class MainActivity : AppCompatActivity() {
 

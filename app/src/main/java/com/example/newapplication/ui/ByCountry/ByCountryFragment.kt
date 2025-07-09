@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+
 import com.example.myapplication.ListViewAdapter
 import com.example.myapplication.ListViewModel
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentBycountryBinding
-import android.content.Intent
+
 import androidx.navigation.fragment.findNavController
-import com.example.newapplication.ui.ByCountry.ByCountryFragmentDirections
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //"국가별 보기"탭을 구성하는 Fragment

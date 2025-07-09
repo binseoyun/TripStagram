@@ -3,20 +3,19 @@ package com.example.newapplication.ui.ByCountry
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
+
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+
 import com.example.newapplication.R
-import com.example.newapplication.ui.All.AllFragmentDirections
+
 import com.example.newapplication.ui.All.GalleryAdapter
 import com.example.newapplication.ui.All.ImagesInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView

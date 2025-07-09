@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toolbar
+
 import com.example.newapplication.R
 
 /*ListView에서 각 항목(나라 + 이미지)를 표시하는 어댑터

@@ -26,7 +26,6 @@ import androidx.navigation.fragment.findNavController
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
-import com.example.newapplication.MainActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentUploadBinding
 import com.google.firebase.firestore.FirebaseFirestore
