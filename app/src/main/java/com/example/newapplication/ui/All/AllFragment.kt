@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +56,7 @@ class AllFragment : Fragment() {
                     val user = document.getString("user")?:""
                     val url = document.getString("url")?:""
                     val locationInfo = document.getString("locationInfo")?:""
-                    val locationInfoDetail=document.getString("locationInfoDetail")
+                    val locationInfoDetail=document.getString("locationInfoDetail")?:""
                     val starbar = document.getString("starbar")?.toIntOrNull()?:0
                     val androidId = document.getString("androidId")?:""
 
@@ -81,7 +81,7 @@ class AllFragment : Fragment() {
 
                 //Adapter 설정(클릭 시 DetailFragment로 이동)
                 adapter=GalleryAdapter(imageList,{pos->
-                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country, locationInfoDetail = imageList[pos].locationinfo,url=imageList[pos].url, user = imageList[pos].user,starbar=imageList[pos].starbar.toString(), androidId = imageList[pos].androidId)
+                    val action = AllFragmentDirections.actionNavigationDashboardToDetailFragment(locationName = imageList[pos].locationinfo, countryName = imageList[pos].country, locationInfoDetail = imageList[pos].locationInfoDetail,url=imageList[pos].url, user = imageList[pos].user,starbar=imageList[pos].starbar.toString(), androidId = imageList[pos].androidId)
                     findNavController().navigate(action)
                 })
 
