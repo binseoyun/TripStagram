@@ -87,6 +87,20 @@ class MainActivity : AppCompatActivity() {
 
         //onSupportNavigateUp()를 통해 최상단 Fragment제외 자동 뒤로가기 <- 생성
         onSupportNavigateUp()
+        navView.setOnItemReselectedListener { item ->
+            val navController = findNavController(R.id.nav_host_fragment_activity_main)
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.popBackStack(R.id.navigation_home, false)
+                }
+                R.id.navigation_dashboard -> {
+                    navController.popBackStack(R.id.navigation_dashboard, false)
+                }
+                R.id.navigation_notifications -> {
+                    navController.popBackStack(R.id.navigation_notifications, false)
+                }
+            }
+        }
     }
 
     //Toolbar 메뉴를 생성
