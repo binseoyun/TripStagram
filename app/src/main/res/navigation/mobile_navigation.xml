@@ -60,6 +60,9 @@
         <argument
             android:name="starbar"
             app:argType="string"/>
+        <argument
+            android:name="androidId"
+            app:argType="string"/>
 
 
     </fragment>

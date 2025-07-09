@@ -30,7 +30,7 @@ import com.example.newapplication.MainActivity
 import com.example.newapplication.R
 import com.example.newapplication.databinding.FragmentUploadBinding
 import com.google.firebase.firestore.FirebaseFirestore
-
+import android.provider.Settings
 class UploadFragment : Fragment() {
 
     private var _binding: FragmentUploadBinding? = null
@@ -206,12 +206,15 @@ class UploadFragment : Fragment() {
 
                     //별점 기능
                     val starBar=binding.ratingBar.rating.toInt().toString()
-
                     //저장된 사용자 ID 불러오기
                     val sharedPreferences:SharedPreferences=requireContext().getSharedPreferences("UserPrefs",
                         Context.MODE_PRIVATE)
                     val userId=sharedPreferences.getString("userId",null)
 
+                    val androidId = Settings.Secure.getString(
+                        requireContext().contentResolver,
+                        Settings.Secure.ANDROID_ID
+                    )
                     println(userId)
 
                  //Firestore에 저장할 데이터
@@ -221,7 +224,8 @@ class UploadFragment : Fragment() {
                         "locationInfo" to locationInfo,
                         "locationInfoDetail" to locationInfoDetail,
                         "starbar" to starBar,
-                        "user" to userId
+                        "user" to userId,
+                        "androidId" to androidId
                     )
 
 
@@ -232,7 +236,7 @@ class UploadFragment : Fragment() {
                             println("문서 추가 성공: ${documentReference.id}")
                             //////////////버튼 재활성화
                             enableButton(submitButton)
-                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,locationInfoDetail,url, userId.toString(),starBar)
+                            val action= UploadFragmentDirections.actionUploadToDetailFragment(locationInfo,selectedCountry,locationInfoDetail,url, userId.toString(),starBar,androidId)
                             findNavController().navigate(action)
                         }
                         .addOnFailureListener { e ->

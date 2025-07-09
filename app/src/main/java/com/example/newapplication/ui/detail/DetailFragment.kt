@@ -3,7 +3,11 @@ package com.example.newapplication.ui.detail
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +18,10 @@ import android.widget.RatingBar
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -56,6 +62,7 @@ class DetailFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
             title = "Information"
         }
+
         val db = FirebaseFirestore.getInstance()
 
         //해당 리스트에서 선택받도록 아이디 연결
@@ -93,7 +100,10 @@ class DetailFragment : Fragment() {
             val sharedPreferences: SharedPreferences =requireContext().getSharedPreferences("UserPrefs",
                 Context.MODE_PRIVATE)
             val userId=sharedPreferences.getString("userId",null)
-
+            val androidId = Settings.Secure.getString(
+                requireContext().contentResolver,
+                Settings.Secure.ANDROID_ID
+            )
             println(userId)
 
 
@@ -101,7 +111,8 @@ class DetailFragment : Fragment() {
 
                 "url" to args.url,
                 "comment" to comments,
-                "userId" to userId
+                "userId" to userId,
+                "androidId" to androidId
             )
 
             val db = FirebaseFirestore.getInstance()
@@ -129,7 +140,63 @@ class DetailFragment : Fragment() {
         return view
 
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        //inflater.inflate(R.menu.template_toolbar_menu, menu)
 
+        // 사용자 ID 등 조건에 따라 삭제 버튼 숨김/표시
+        if(Settings.Secure.getString(
+            requireContext().contentResolver,
+            Settings.Secure.ANDROID_ID
+        )==args.androidId){
+            menu.findItem(R.id.menu_delete)?.isVisible = true
+        }else
+            menu.findItem(R.id.menu_delete)?.isVisible = false
+    }
+
+    fun delete(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirm Deletion")
+            .setMessage("Are you sure you want to delete this post?")
+            .setPositiveButton("Yes") { _, _ ->
+                val db = FirebaseFirestore.getInstance()
+
+                db.collection("comment") // 컬렉션 이름 (예: posts)
+                    .whereEqualTo("url", args.url) // url이 일치하는 문서 찾기
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        for (document in querySnapshot) {
+                            db.collection("comment").document(document.id)
+                                .delete()
+                                .addOnSuccessListener {
+                                    Log.d("Firestore", "Document deleted successfully: ${document.id}")
+
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("Firestore", "Error deleting document", e)
+                                }
+                        }
+                        db.collection("images")
+                            .whereEqualTo("url",args.url)
+                            .get()
+                            .addOnSuccessListener { querySnapshot->
+                                for(document in querySnapshot){
+                                    db.collection("images").document(document.id)
+                                        .delete()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(requireContext(),"삭제성공",Toast.LENGTH_SHORT).show()
+                                            findNavController().navigateUp()
+                                        }
+                                }
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error getting documents: ", e)
+                    }
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
 
 
 
